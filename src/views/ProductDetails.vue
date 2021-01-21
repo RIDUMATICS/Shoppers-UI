@@ -5,7 +5,7 @@
       <div class="left">
         <div class="main">
           <img :src="product.image" alt="">
-          <div class="discount">{{product.discount}}%</div>
+          <div class="discount" v-if="dicount > 0">{{product.discount}}%</div>
         </div>
       </div>
       <div class="right container">
