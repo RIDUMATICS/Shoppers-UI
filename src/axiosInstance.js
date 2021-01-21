@@ -4,7 +4,7 @@ import store from './store';
 import shoppersError from './service/customError';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:1337',
+  baseURL: 'http://shoppers-api.herokuapp.com',
   headers: {
     'Accept': 'application/json'
   }
