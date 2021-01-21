@@ -51,7 +51,6 @@ const actions = {
       })
       .then( res => {
         commit('addOrders', res.data.result)
-        console.log(res.data.result)
         resolve(res.data.result);
       })
       .catch( err => reject(err));
@@ -87,7 +86,6 @@ const actions = {
 
 const mutations = {
   addOrderDetails: (state, { order }) => {
-    console.log(order);
     state.orderDetails = order;
   },
   addOrders: (state, { orders }) => {

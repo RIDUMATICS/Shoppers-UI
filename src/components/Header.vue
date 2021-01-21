@@ -5,7 +5,7 @@
     <nav class="nav" :class="{'show': showMenu}" >
       <div class="navigation container">
         <div class="logo">
-          <h1>Shoppers <span style="display:inline-block; background-color: #fc7c7c; width: 7px; height: 7px; border-radius: 50%; margin-left: -3px; margin-bottom: 0;"></span></h1>
+          <router-link to="/"><h1>Shoppers <span style="display:inline-block; background-color: #fc7c7c; width: 7px; height: 7px; border-radius: 50%; margin-left: -3px; margin-bottom: 0;"></span></h1></router-link>
         </div>
         <div class="menu" :class="{'show': showMenu }">
           <div class="top-nav">

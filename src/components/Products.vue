@@ -6,17 +6,14 @@
 </template>
 
 <script>
-import { useStore } from 'vuex';
-import { computed } from 'vue';
 import Product from "../components/Product";
 export default {
-  setup(){
-    const store = useStore();
-    const products = computed( () => store.getters.getProducts);
-    
+  props: {
+    products: Array,
+  },
+  setup(){    
     return {
       Product,
-      products ,
     }
   }
 }

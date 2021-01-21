@@ -4,27 +4,37 @@
     <Details />
     <div class="container product-overview">
       <h3>PRODUCT OVERVIEW</h3>
-      <!-- <Products /> -->
+      <Products :products="products"/>
       <div class="more-btn">
-        <a>load more</a>
+        <router-link to="/shop/1">load more</router-link>
       </div>
     </div>
   </main>
 </template>
 
 <script>
+import {computed, onMounted} from 'vue';
 import Details from "../components/Details";
 import Filter from "../components/Filter";
 import Products from "../components/Products";
 import Hero from "../components/Hero";
+import { useStore } from 'vuex';
 export default {
   name: 'Home',
   setup(){
+    const store = useStore();
+    const products = computed( () => store.getters.getProducts.filter((p, index) => index < 8));
+
+    onMounted(() => {
+      store.dispatch('fetchProducts', {page: 1});
+    })
+
     return {
       Details,
       Hero,
       Filter,
-      Products
+      Products,
+      products
     }
   }
 }

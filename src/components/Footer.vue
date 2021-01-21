@@ -32,7 +32,7 @@
             <span>
               <font-awesome-icon :icon="faMapMarkerAlt" />
             </span>
-            42 Dream House, Dreammy Street.
+            42 Dream House, Lagos Street.
           </div>
           <div>
             <span>
@@ -50,7 +50,7 @@
             <span>
               <font-awesome-icon :icon="faPaperPlane" />  
             </span>
-            Dream City, USA
+            Dream City, Lagos
           </div>
         </div>
       </div>

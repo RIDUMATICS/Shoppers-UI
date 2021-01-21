@@ -165,7 +165,7 @@ export default {
   }
 
   .sigin_part_text {
-    background-image: linear-gradient(to bottom, rgba(36,58,111, .5), rgba(36,58,111)), url('../assets/slide-07.jpg');
+    background-image: linear-gradient(to bottom, rgba(36,58,111, .5), rgba(36,58,111)), url('../assets/images/slide-07.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

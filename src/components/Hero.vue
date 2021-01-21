@@ -22,7 +22,7 @@ export default {
     height: 100vh !important;
     width: 100% ;
     overflow: hidden;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url('../assets/slide-01.jpg');
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url('../assets/images/slide-01.jpg');
     background-position: center;
     background-size: cover;
     position: relative;

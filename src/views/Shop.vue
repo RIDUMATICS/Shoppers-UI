@@ -1,7 +1,7 @@
 <template>
   <main class="container">
     <Filter />
-    <Products> 
+    <Products :products="products"> 
       <Pagination v-show="pageCount > 1"/>
     </Products>
   </main>

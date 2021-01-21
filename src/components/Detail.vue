@@ -8,7 +8,7 @@
     </div>
     <img :src="bannerImg" />
     <div class="overlay">
-      <a>SHOP NOW</a>
+      <router-link :to="link">SHOP NOW</router-link>
     </div>
   </div>
 </template>
@@ -18,7 +18,8 @@ export default {
   name: 'Detail',
   props: {
     type: String,
-    bannerImg: String
+    bannerImg: String,
+    link: String
   }
 }
 </script>

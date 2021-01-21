@@ -120,7 +120,7 @@ export default {
     async function createProduct(){
       try {
         if(!(data.name && data.brand && data.category && data.description && data.price && 
-        data.discount && data.countInStock && data.productImage && data.checkedProductFors.length) ){
+        data.discount > -1 && data.countInStock && data.productImage && data.checkedProductFors.length) ){
           store.commit('popupAlert', {head: 'Unable to create', body: 'Please fill all product details', status: 'error'})
         } else {
           data.isCreatingProduct = true;
@@ -147,10 +147,15 @@ export default {
 
     async function updateProduct() {
       try {
-        console.log('updateProduct');
-        const { productId } = route.params;
-        await store.dispatch('updateProduct', { productId, data });
-        store.commit('popupAlert', {head: 'Product Updated', body: '', status: 'success'})
+        if(!(data.name && data.brand && data.category && data.description && data.price && 
+        data.discount >= 0 && data.countInStock && data.checkedProductFors.length) ){
+          store.commit('popupAlert', {head: 'Unable to create', body: 'Please fill all product details', status: 'error'})
+        } else {
+          const { productId } = route.params;
+          data.productFor = data.checkedProductFors ;
+          await store.dispatch('updateProduct', { productId, data });
+          store.commit('popupAlert', {head: 'Product Updated', body: '', status: 'success'})
+        }
       } catch (error) {
         console.log(error);
       }
@@ -161,7 +166,6 @@ export default {
         if(route.name == 'editProduct'){
           const { productId } = route.params
           const { product } = await store.dispatch('fetchProductById', { productId });
-          console.log(product);
           data.name = product.name;
           data.brand = product.brand;
           data.price = product.price;

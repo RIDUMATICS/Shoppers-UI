@@ -49,6 +49,7 @@ const actions = {
 
   updateProduct(_, { productId, data}) {
     return new Promise((resolve, reject) => {
+      console.log(data);
       axios.patch(`/products/${productId}`, data, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -74,7 +75,6 @@ const actions = {
   },
 
   addProductReview({ commit }, { productId, rating, comment}) {
-    console.log(rating);
     return new Promise((resolve, reject) => {
       axios.post(`/products/${productId}/reviews`, { rating, comment },
       {

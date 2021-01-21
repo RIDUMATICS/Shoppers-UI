@@ -1,9 +1,9 @@
 <template>
   <section class="section details">
     <div class="details-center container">
-      <Detail :bannerImg="banner01" type="Women's"/>
-      <Detail :bannerImg="banner02" type="Men's"/>
-      <Detail :bannerImg="banner03" type="Kid's"/>
+      <Detail :bannerImg="banner01" type="Women's" link="/shop/1?for=women"/>
+      <Detail :bannerImg="banner02" type="Men's" link="/shop/1?for=men"/>
+      <Detail :bannerImg="banner03" type="Kid's" link="/shop/1?for=kids"/>
     </div>
   </section>
   
@@ -11,9 +11,9 @@
 
 <script>
 import Detail from "./Detail";
-import banner01 from '@/assets/banner-01.jpg';
-import banner02 from '@/assets/banner-02.jpg';
-import banner03 from '@/assets/banner-03.jpg';
+import banner01 from '@/assets/images/banner-01.jpg';
+import banner02 from '@/assets/images/banner-02.jpg';
+import banner03 from '@/assets/images/banner-03.jpg';
 
 export default {
   name: 'Details',
