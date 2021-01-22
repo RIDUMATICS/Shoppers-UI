@@ -1,6 +1,6 @@
 <template>
  <main>
-   <section class="cart container">
+   <section class="cart container" v-if="carts.length">
      <div class="wrap-table-shopping-cart">
         <table class="table-shopping-cart">
           <tbody><tr class="table_head">
@@ -113,13 +113,17 @@
        </form>   
 			</div>
    </section>
+   <EmptyPage heading="Your cart is empty!" text="Browse our products and discover our best deals!" v-else>
+      <router-link to="/shop/1">start shopping</router-link>
+    </EmptyPage>
  </main>
 </template>
 
 <script>
 import { useStore } from 'vuex';
 import { computed, reactive, toRefs, watch } from 'vue';
-import CartItem from '../components/CartItem';
+import CartItem from '@/components/CartItem';
+import EmptyPage from '@/components/Error/EmptyPage';
 import currencyFormater from  '../currencyFormat';
 import { getCities, states } from '../states'; //shows list of states in nigeria and cities in that state
 import { useRouter } from 'vue-router';
@@ -201,7 +205,8 @@ export default {
       format,
       states: states(), //list of states in nigeria
       submitOrder,
-      Button
+      Button,
+      EmptyPage
     }
   }
 }

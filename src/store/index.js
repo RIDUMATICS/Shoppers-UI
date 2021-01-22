@@ -9,11 +9,10 @@ export default createStore({
     message: {
       head: '',
       body: '',
-      status: '', // success or error
+      status: '', // success or error alert
     }, //  message
     alertOpen: false,
     isLoading: false,
-    loadingMessage: ''
   },
   getters: {
     isAlertOpen: (state) => state.alertOpen,
@@ -33,9 +32,8 @@ export default createStore({
       state.status = '';
       state.alertOpen = false;
     },
-    showLoading: (state, loadingMessage = 'Setting up...' ) => {
+    showLoading: (state ) => {
       state.isLoading = true;
-      state.loadingMessage = loadingMessage;
     },
     closeLoading: (state) => {
       state.isLoading = false;

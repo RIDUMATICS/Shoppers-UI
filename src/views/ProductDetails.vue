@@ -85,10 +85,12 @@ export default {
 
     onMounted(async () => {
       try {
-         await store.dispatch('fetchProductById', { productId: route.params.productId })
+        store.commit('showLoading');  
+        await store.dispatch('fetchProductById', { productId: route.params.productId })
       } catch (error) {
         console.log(error)
       }
+      store.commit('closeLoading');
     })
 
     return {

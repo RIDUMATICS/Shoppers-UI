@@ -164,6 +164,7 @@ export default {
     onMounted(async () => {
       try {
         if(route.name == 'editProduct'){
+          store.commit('showLoading');
           const { productId } = route.params
           const { product } = await store.dispatch('fetchProductById', { productId });
           data.name = product.name;
@@ -178,6 +179,7 @@ export default {
       } catch (error) {
         console.log(error)
       }
+      store.commit('closeLoading');
     })
 
     return {

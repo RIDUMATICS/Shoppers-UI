@@ -24,8 +24,10 @@ export default {
     const products = computed( () => store.getters.getProducts);
     const pageCount = computed(() => useStore().state.product.totalPages);
 
-    function fetchProducts(input) {
-      store.dispatch('fetchProducts', input)
+    async function fetchProducts(input) {
+      store.commit('showLoading');
+      await store.dispatch('fetchProducts', input);
+      store.commit('closeLoading');
     }
 
     watch(() => route.query.category, (value) => {
@@ -51,7 +53,7 @@ export default {
       fetchProducts({ page, productFor, category });
     } )
     
-    onMounted(() => {
+    onMounted(async () => {
       const { for: productFor, category } = route.query;
       fetchProducts({ page: route.params.page, productFor, category });
     })

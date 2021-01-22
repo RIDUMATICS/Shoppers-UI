@@ -27,6 +27,9 @@ axiosInstance.interceptors.response.use((response) => {
     store.dispatch('logoutUser')
     router.push({ name: 'login', query: { redirect: path } })
   }
+  else if(status === 404) {
+    router.push({ name: 'not-found' })
+  }
   return Promise.reject(new shoppersError(error, status));
 });
 

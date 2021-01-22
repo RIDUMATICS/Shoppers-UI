@@ -49,8 +49,10 @@ export default {
       products: computed(() => store.getters.getProducts)
     })
 
-    onMounted(() => {
-      store.dispatch('fetchProducts', {})
+    onMounted(async() => {
+      store.commit('showLoading');
+      await store.dispatch('fetchProducts', {})
+      store.commit('closeLoading');
     })
 
     async function deleteProduct(productId) {

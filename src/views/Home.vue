@@ -25,8 +25,10 @@ export default {
     const store = useStore();
     const products = computed( () => store.getters.getProducts.filter((p, index) => index < 8));
 
-    onMounted(() => {
-      store.dispatch('fetchProducts', {page: 1});
+    onMounted(async () => {
+      store.commit('showLoading');
+      await store.dispatch('fetchProducts', {page: 1});
+      store.commit('closeLoading');
     })
 
     return {

@@ -50,8 +50,10 @@ export default {
       orders: computed(() => store.getters.getOrders)
     })
 
-    onMounted(() => {
-      store.dispatch('fetchOrders');
+    onMounted(async () => {
+      store.commit('showLoading');
+      await store.dispatch('fetchOrders');
+      store.commit('closeLoading');
     })
 
     return {

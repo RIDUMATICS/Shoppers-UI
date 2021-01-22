@@ -117,11 +117,13 @@ export default {
 
     onMounted(async () => {
       try {
+        store.commit('showLoading');
         const { orderId } = route.params;
         await store.dispatch('getOrderById', orderId);
       } catch (error) {
         console.log(error);
       }
+      store.commit('closeLoading');
     });
     
     return {
