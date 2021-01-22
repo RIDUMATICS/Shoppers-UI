@@ -16,6 +16,10 @@
                   <input required autocomplete="on" v-model="email" type="email" name="email" placeholder="E-mail"/>
                 </div>
                 <div class="form-group phone-group">
+                  <select>
+                    <option disabled selected>Country</option>
+                    <option v-for="country in countries" :key="country.name">{{ country.name }}</option>
+                  </select>
                   <input required autocomplete="on" v-model="phoneNumber" type="tel" name="phone" placeholder="Phone Number" />
                 </div>
                 <div class="form-group password">
@@ -65,6 +69,7 @@ import { faEye, faEyeSlash, faCheckCircle, faTimesCircle  } from '@fortawesome/f
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import Button from '@/components/Button';
+import countries from '../countries';
 
 export default {
   setup(){
@@ -135,6 +140,7 @@ export default {
 
     return {
       ...toRefs(data),
+      countries,
       toggleVisiblePassword,
       registerNewUser,
       FontAwesomeIcon,
@@ -214,6 +220,21 @@ export default {
     
   }
 
+  .phone-group {
+    display: flex;
+  }
+
+  .phone-group select {
+    font-size: 1.5rem;
+    border: none;
+    width: 100px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .phone-group select:focus{
+    outline: none;
+  }
+
   .sigin_part_form {
     padding: 80px 70px;
     display: table;
@@ -240,7 +261,7 @@ export default {
     position: absolute;
     justify-content: center;
     align-items: center;
-    font-size: 2rem;
+    font-size: 1.5rem;
     cursor: pointer;
     right: 0;
   }
@@ -253,7 +274,7 @@ export default {
     outline: none;
     width: 100%;
     padding: .4rem 1rem;
-    font-size: 2rem;
+    font-size: 1.5rem;
     line-height: 1.5;
     color: #495057;
     box-sizing: border-box;
