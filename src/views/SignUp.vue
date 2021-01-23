@@ -5,7 +5,7 @@
           <div>
             <div class="sigin_part_form">
               <h3>Welcome To Shoppers! <br/>Create Account.</h3>
-              <form>
+              <form @submit.prevent="registerNewUser">
                 <div class="form-group">
                   <input required autocomplete="on" v-model="firstName" autofocus type="text" name="firstName" placeholder="First Name"/>
                 </div>
@@ -16,14 +16,14 @@
                   <input required autocomplete="on" v-model="email" type="email" name="email" placeholder="E-mail"/>
                 </div>
                 <div class="form-group phone-group">
-                  <select>
-                    <option disabled selected>Country</option>
-                    <option v-for="country in countries" :key="country.name">{{ country.name }}</option>
+                  <select required name="country" v-model="phonePrefix">
+                    <option disabled value="">Country</option>
+                    <option v-for="country in countries" :key="country.name" :value="`+${country.callingCodes}`">{{ country.name }}</option>
                   </select>
                   <input required autocomplete="on" v-model="phoneNumber" type="tel" name="phone" placeholder="Phone Number" />
                 </div>
                 <div class="form-group password">
-                  <input required v-model="password" :type="visiblePassword ? 'text' : 'password'" name="password" placeholder="Password"/>
+                  <input required minlength="7" v-model="password" :type="visiblePassword ? 'text' : 'password'" name="password" placeholder="Password"/>
                   <div class="icon" @click="toggleVisiblePassword">
                     <FontAwesomeIcon v-if="visiblePassword" :icon="faEye"/>
                     <FontAwesomeIcon v-else :icon="faEyeSlash "/>
@@ -37,8 +37,7 @@
                   </div>
                 </div>
                 <Button
-                  :isLoading="isLoading" 
-                  :onClick="registerNewUser" 
+                  :isLoading="isLoading"
                   theme="blue"
                   :style="{
                     width: '100%',
@@ -69,7 +68,7 @@ import { faEye, faEyeSlash, faCheckCircle, faTimesCircle  } from '@fortawesome/f
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import Button from '@/components/Button';
-import countries from '../countries';
+import countries from '../service/countries';
 
 export default {
   setup(){
@@ -80,6 +79,7 @@ export default {
       lastName: '',
       email: '',
       phoneNumber: '',
+      phonePrefix:'',
       password: '',
       verifyPassword: '',
       isConfirmPassword: false,
@@ -101,15 +101,16 @@ export default {
         data.isConfirmPassword = false;
     });
 
+    watch(() => data.phonePrefix, (value) => {
+      data.phoneNumber = value + "";
+    })
+
     function toggleVisiblePassword (){
       data.visiblePassword = !data.visiblePassword
     }
 
     async function registerNewUser (){
-      if(!(data.firstName && data.lastName && data.email && data.phoneNumber && data.password)){
-        store.commit('popupAlert', { head: 'Unable to register user', body: 'Please fill in all your details', status: 'error'})
-      }
-      else if(data.password !== data.verifyPassword){
+      if(data.password !== data.verifyPassword){
         store.commit('popupAlert', { head: 'Unable to register user', body: 'password and confirm password does not match', status: 'error'})
       } else {
         try {

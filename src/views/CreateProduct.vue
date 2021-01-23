@@ -54,7 +54,7 @@
         theme="blue-rev"
         v-if="pathName == 'createProduct'"
         :isLoading="isCreatingProduct"
-        :onClick="createProduct"
+        @click="createProduct"
         :style="{
           'width': '100%',
           'font-size': '15px',
@@ -65,9 +65,9 @@
       >Create Product</Button>
       <Button
         theme="blue-rev"
-        :onClick="updateProduct"
+        @click="updateProduct"
         v-if="pathName == 'editProduct'"
-        :isLoading="isUpdadatingData"
+        :isLoading="isUpdatingProduct"
         :style="{
           'width': '100%',
           'font-size': '15px',
@@ -151,12 +151,15 @@ export default {
         data.discount >= 0 && data.countInStock && data.checkedProductFors.length) ){
           store.commit('popupAlert', {head: 'Unable to create', body: 'Please fill all product details', status: 'error'})
         } else {
+          data.isUpdatingProduct = true
           const { productId } = route.params;
           data.productFor = data.checkedProductFors ;
           await store.dispatch('updateProduct', { productId, data });
           store.commit('popupAlert', {head: 'Product Updated', body: '', status: 'success'})
+          data.isUpdatingProduct = false;
         }
       } catch (error) {
+        data.isUpdatingProduct = false;
         console.log(error);
       }
     }

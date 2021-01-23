@@ -2,7 +2,6 @@
   <button
     type="submit"
     :disabled="isLoading"
-    @click.prevent="onClick"
     class="loading_button"
     :class="{ blue: !isLoading && theme === 'blue', 'blue-rev': !isLoading && theme === 'blue-rev' }"
     :style="style"
@@ -20,10 +19,6 @@ export default {
     isLoading: {
       type: Boolean,
       required: true,
-    },
-    onClick: {
-      type: Function,
-      required: true
     },
     theme: {
       type: String,

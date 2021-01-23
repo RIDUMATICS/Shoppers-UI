@@ -60,6 +60,7 @@ const mutations = {
   },
   clearCart: (state) => {
     state.cartItems = [];
+    state.subTotal= 0;
   }
 };  
 

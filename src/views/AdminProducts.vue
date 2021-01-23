@@ -23,7 +23,7 @@
             <td class="column-3">{{ product.price }}</td>
             <td class="column-4">{{ product.discount }}%</td>
             <td class="column-5">
-              <button class="btn-1"><router-link :to="{ name: 'editProduct', params: { productId: product.id }}">Edit</router-link></button>
+              <router-link class="btn-1" :to="{ name: 'editProduct', params: { productId: product.id }}">Edit</router-link>
               <button class="btn-2" @click="deleteProduct(product.id)">Delete</button>
             </td>
           </tr>        
@@ -33,6 +33,7 @@
     <EmptyPage heading="Empty Product" text="unfortunately nothing could be found" v-else>
       <router-link to="/">Back Home</router-link>
     </EmptyPage>
+    <Pagination v-show="pageCount > 1"/>
   </section>
   </main>
 </template>
@@ -41,12 +42,14 @@
 import { computed, onMounted, reactive, toRefs } from 'vue';
 import { useStore } from 'vuex'
 import EmptyPage from '@/components/Error/EmptyPage'
+import Pagination from '@/components/Pagination'
 export default {
   setup(){
     const store = useStore();
 
     const event = reactive({
-      products: computed(() => store.getters.getProducts)
+      products: computed(() => store.getters.getProducts),
+      pageCount: computed(() => useStore().state.product.totalPages),
     })
 
     onMounted(async() => {
@@ -67,6 +70,7 @@ export default {
     return {
       ...toRefs(event),
       EmptyPage,
+      Pagination,
       deleteProduct
     }
   }

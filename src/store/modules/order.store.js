@@ -1,4 +1,4 @@
-import axios from "../../axiosInstance";
+import axios from "../../service/axiosInstance";
 
 const state = {
   orders: [],
@@ -25,6 +25,21 @@ const actions = {
       .then((res) => resolve(res))
       .catch(err => reject(err));
     });
+  },
+
+  deleteOrder({ commit }, orderId ){
+    return new Promise((resolve, reject) => {
+      axios.delete(`/products/${orderId}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      .then((res) => {
+        commit('removeOrder', orderId);
+        resolve(res);
+      })
+      .catch(err => reject(err));
+    })
   },
 
   getOrderById({commit}, id){
@@ -90,6 +105,9 @@ const mutations = {
   },
   addOrders: (state, { orders }) => {
     state.orders = orders;
+  },
+  removeOrder: (state, orderId) => {
+    state.orders = state.orders.filter(order => order.id != orderId);
   }
 };  
 

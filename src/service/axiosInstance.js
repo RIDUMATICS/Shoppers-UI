@@ -1,10 +1,10 @@
 import axios from 'axios';
-import router from './router';
-import store from './store';
-import shoppersError from './service/customError';
+import router from '../router';
+import store from '../store';
+import shoppersError from './customError';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://shoppers-api.herokuapp.com',
+  baseURL: 'http://localhost:1337',
   headers: {
     'Accept': 'application/json'
   }
@@ -30,6 +30,8 @@ axiosInstance.interceptors.response.use((response) => {
   else if(status === 404) {
     router.push({ name: 'not-found' })
   }
+
+  console.log(error);
   return Promise.reject(new shoppersError(error, status));
 });
 

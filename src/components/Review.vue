@@ -16,8 +16,8 @@
           <RatingsInput @setRating="setRating"/>
         </label>
         <label >Your Review</label>
-        <textarea rows="6" v-model="comment"></textarea>
-        <Button :isLoading="false" :onClick="submitReview" theme="blue">submit review</Button>
+        <textarea rows="6" v-model="comment" required></textarea>
+        <Button :isLoading="isLoading" theme="blue">submit review</Button>
       </form>
     </section>
 </template>
@@ -37,7 +37,8 @@ export default {
     const data = reactive({
       ratingValue: 0,
       comment: '',
-      user: computed(() => store.getters.getUser)
+      user: computed(() => store.getters.getUser),
+      isLoading: false
     })
     const route = useRoute();
     const store = useStore();
@@ -48,21 +49,22 @@ export default {
 
     async function submitReview() {
       try {
-        console.log(data.ratingValue < 1, data.comment === '');
         if(data.ratingValue < 1 || data.comment === '' ){
           store.commit('popupAlert', {head: 'Unable to submit', body: 'Rating or comment is empty', status: 'error'})
         }
         else {
+          data.isLoading = true;
           const { productId } = route.params;
           await store.dispatch('addProductReview', { 
             productId,
             rating: data.ratingValue,
             comment: data.comment
           })
-
+          data.isLoading = false;
           store.commit('popupAlert', { head: 'Review submitted', body: '', status: 'success' })
         }
       } catch (error) {
+        data.isLoading = false;
         store.commit('popupAlert', {head: 'Unable to submit', body: error.message, status: 'error'})
       }
 

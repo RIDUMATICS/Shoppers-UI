@@ -14,14 +14,17 @@
               <h3>Welcome Back! <br/>Please Sign in now.</h3>
               <form @submit.prevent="loginUser">
                 <div class="form-group">
-                  <input type="email" name="email" placeholder="E-mail" v-model="email"/>
+                  <input required type="email" name="email" placeholder="E-mail" v-model="email"/>
                 </div>
-                <div class="form-group">
-                  <input type="password" name="password" placeholder="Password" v-model="password"/>
+                <div class="form-group password">
+                  <input required :type="visiblePassword ? 'text': 'password'" name="password" placeholder="Password" v-model="password"/>
+                  <div class="icon" @click="toggleVisiblePassword">
+                    <FontAwesomeIcon v-if="visiblePassword" :icon="faEye"/>
+                    <FontAwesomeIcon v-else :icon="faEyeSlash "/>
+                  </div>
                 </div>
                 <Button
                   :isLoading="isLoading" 
-                  :onClick="loginUser" 
                   theme="blue"
                   :style="{
                     width: '100%',
@@ -43,6 +46,8 @@ import { reactive, toRefs } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 import Button from '@/components/Button'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faEye, faEyeSlash  } from '@fortawesome/free-regular-svg-icons';
 
 export default {
   setup(){
@@ -53,8 +58,13 @@ export default {
     const event = reactive({
       email: '',
       password: '',
-      isLoading: false
+      isLoading: false,
+      visiblePassword: false,
     })
+
+    function toggleVisiblePassword (){
+      event.visiblePassword = !event.visiblePassword
+    }
 
 
     async function loginUser(){
@@ -81,7 +91,11 @@ export default {
     return {
       ...toRefs(event),
       Button,
-      loginUser
+      FontAwesomeIcon,
+      faEye,
+      faEyeSlash,
+      loginUser,
+      toggleVisiblePassword 
     }
   }
 }
@@ -160,7 +174,24 @@ export default {
     margin-top: 0;
   }
 
-  .form-group input[type="email"], .login_part_form input[type="password"] {
+  .password {
+    position: relative;
+
+  }
+
+  .password .icon {
+    display: inline-flex;
+    flex-direction: column;
+    height: 100%;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    right: 0;
+  }
+
+  .form-group input[type="email"], .login_part_form input[type="password"], .login_part_form input[type="text"] {
     border: 0px solid transparent;
     border-bottom: 1px solid #ddd;
     border-radius: 0;

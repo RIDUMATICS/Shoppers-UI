@@ -19,7 +19,7 @@
           <tr v-for="order in orders" :key="order.id" class="table_row">
             <td class="column-0">{{ order.id }}</td>
             <td class="column-1">{{ order.owner.firstName }} {{ order.owner.lastName }}</td>
-            <td class="column-2">{{ order.createdAt }}</td>
+            <td class="column-2">{{ formatDate(order.createdAt) }}</td>
             <td class="column-3">{{ order.totalPrice }}</td>
             <td class="column-4">{{ order.isPaid }}</td>
             <td class="column-5">{{ order.isDelivered }}</td>
@@ -32,7 +32,7 @@
       </table>
     </div>
     <EmptyPage heading="You have placed no orders yet!" text="All your orders will be saved here for you to access their state anytime." v-else>
-      <router-link to="/shop">Continue Shopping</router-link>
+      <router-link to="/shop/1">Continue Shopping</router-link>
     </EmptyPage>
   </section>
   </main>
@@ -50,6 +50,17 @@ export default {
       orders: computed(() => store.getters.getOrders)
     })
 
+    function formatDate(date) {
+      return new Date(date).toLocaleDateString(
+        'en-gb',
+        {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }
+      );
+    }
+
     onMounted(async () => {
       store.commit('showLoading');
       await store.dispatch('fetchOrders');
@@ -58,6 +69,7 @@ export default {
 
     return {
       ...toRefs(data),
+      formatDate,
       EmptyPage,
     }
   }

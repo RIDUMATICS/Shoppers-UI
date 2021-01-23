@@ -19,7 +19,7 @@
       </table>
      </div>
      <div class="sidebar">
-       <form>
+       <form @submit.prevent="submitOrder">
 					<div>
 						<h4>
 							Cart Totals
@@ -101,7 +101,6 @@
             <Button
               theme="blue-rev"
               :isLoading="isLoading"
-              :onClick="submitOrder"
               :style="{
                 'font-size': '1.2rem',
                 'margin-top': '30px',
@@ -125,7 +124,7 @@ import { computed, reactive, toRefs, watch } from 'vue';
 import CartItem from '@/components/CartItem';
 import EmptyPage from '@/components/Error/EmptyPage';
 import currencyFormater from  '../currencyFormat';
-import { getCities, states } from '../states'; //shows list of states in nigeria and cities in that state
+import { getCities, states } from '../service/states'; //shows list of states in nigeria and cities in that state
 import { useRouter } from 'vue-router';
 import Button from '@/components/Button';
 

@@ -2,7 +2,7 @@
     <Button
         v-if="!embed"
         theme='blue-rev'
-        :onClick="payWithPaystack"
+        @click="payWithPaystack"
         :isLoading="isLoading"
         :style="{
             width: '100%',

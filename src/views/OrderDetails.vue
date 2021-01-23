@@ -44,7 +44,7 @@
             <Button 
               theme="blue-rev"
               :isLoading="isLoading"
-              :onClick="deliverOrder"
+              @click.prevent="deliverOrder"
               v-show="user.isAdmin && !order.isDelivered"
               :style="{
                 width: '100%',
