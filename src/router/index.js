@@ -1,12 +1,12 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import NotFound from '../views/NotFound.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import Home from '../views/Home.vue';
+import NotFound from '../views/NotFound.vue';
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
   },
   {
     path: '/shop/:page',
@@ -14,7 +14,8 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Shop.vue')
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/Shop.vue'),
   },
   {
     path: '/details/:productId',
@@ -22,7 +23,9 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/ProductDetails.vue')
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/ProductDetails.vue'),
+    props: true,
   },
   {
     path: '/cart',
@@ -30,10 +33,11 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Cart.vue'),
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/Cart.vue'),
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
   {
     path: '/orders/:orderId',
@@ -41,10 +45,11 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/OrderDetails.vue'),
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/OrderDetails.vue'),
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
   {
     path: '/admin/create-product',
@@ -52,11 +57,12 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/CreateProduct.vue'),
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/CreateProduct.vue'),
     meta: {
       requiresAuth: true,
-      onlyAdmin: true
-    }
+      onlyAdmin: true,
+    },
   },
   {
     path: '/admin/edit-product/:productId',
@@ -64,11 +70,12 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/CreateProduct.vue'),
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/CreateProduct.vue'),
     meta: {
       requiresAuth: true,
-      onlyAdmin: true
-    }
+      onlyAdmin: true,
+    },
   },
   {
     path: '/orders',
@@ -76,10 +83,11 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Orders.vue'),
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/Orders.vue'),
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
   {
     path: '/admin/products',
@@ -87,11 +95,12 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AdminProducts.vue'),
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/AdminProducts.vue'),
     meta: {
       requiresAuth: true,
-      onlyAdmin: true
-    }
+      onlyAdmin: true,
+    },
   },
   {
     path: '/login',
@@ -99,13 +108,14 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/SignIn.vue'),
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/SignIn.vue'),
     beforeEnter: (__, _, next) => {
-      if(localStorage.getItem('token')){
-        next({ path: '/'})
+      if (localStorage.getItem('token')) {
+        next({ path: '/' });
       }
       next();
-    }
+    },
   },
   {
     path: '/register',
@@ -113,40 +123,40 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/SignUp.vue'),
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/SignUp.vue'),
     beforeEnter: (__, _, next) => {
-      if(localStorage.getItem('token')){
-        next({ path: '/'})
+      if (localStorage.getItem('token')) {
+        next({ path: '/' });
       }
       next();
-    }
+    },
   },
-  { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound }
-]
+  { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound },
+];
 
 const router = createRouter({
   scrollBehavior() {
     return {
       top: 0,
       left: 0,
-    }
+    };
   },
   history: createWebHistory(),
-  routes
+  routes,
 });
 
 router.beforeEach((to, from, next) => {
-  if(to.matched.some(record => record.meta.requiresAuth)){
-    if(localStorage.getItem('token') === null){
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (localStorage.getItem('token') === null) {
       next({
         path: '/login',
-        query: { redirect: to.fullPath }
-      })
-    }
-    else {
-      if(to.matched.some(record => record.meta.onlyAdmin)){
+        query: { redirect: to.fullPath },
+      });
+    } else {
+      if (to.matched.some((record) => record.meta.onlyAdmin)) {
         const user = JSON.parse(localStorage.getItem('user'));
-        if(user.isAdmin){
+        if (user.isAdmin) {
           next();
         } else {
           next('/');
@@ -155,10 +165,9 @@ router.beforeEach((to, from, next) => {
         next();
       }
     }
-  }
-  else {
+  } else {
     next();
   }
-})
+});
 
-export default router
+export default router;

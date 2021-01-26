@@ -1,6 +1,6 @@
 class shoppersError extends Error {
-  constructor(message, status){
-    super(message)
+  constructor(message, status) {
+    super(message);
     this.status = status;
   }
 }

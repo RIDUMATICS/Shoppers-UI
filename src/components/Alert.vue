@@ -16,10 +16,10 @@
 </template>
 
 <script>
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faTimesCircle } from "@fortawesome/free-regular-svg-icons";
-import { computed, reactive, toRefs, watch } from "vue";
-import { useStore } from "vuex";
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faTimesCircle } from '@fortawesome/free-regular-svg-icons';
+import { computed, reactive, toRefs, watch } from 'vue';
+import { useStore } from 'vuex';
 export default {
   setup() {
     const store = useStore();
@@ -29,7 +29,7 @@ export default {
     });
 
     function closeAlert() {
-      store.commit("closeAlert");
+      store.commit('closeAlert');
     }
 
     watch(
@@ -38,7 +38,7 @@ export default {
         let timeout;
         if (value) {
           timeout = setTimeout(() => {
-            store.commit("closeAlert");
+            store.commit('closeAlert');
           }, 4000);
         } else {
           clearTimeout(timeout);

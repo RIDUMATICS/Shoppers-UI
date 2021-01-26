@@ -2,7 +2,8 @@
   <div class="detail-box">
     <div class="content">
       <h2>
-        {{ type }} <br/> Fashion
+        {{ type }} <br />
+        Fashion
       </h2>
       <h4>World Best Brands</h4>
     </div>
@@ -19,11 +20,9 @@ export default {
   props: {
     type: String,
     bannerImg: String,
-    link: String
-  }
-}
+    link: String,
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

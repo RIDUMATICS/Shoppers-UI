@@ -1,103 +1,132 @@
 <template>
- <main>
-   <section class="cart container" v-if="carts.length">
-     <div class="wrap-table-shopping-cart">
+  <main>
+    <section class="cart container" v-if="carts.length">
+      <div class="wrap-table-shopping-cart">
         <table class="table-shopping-cart">
-          <tbody><tr class="table_head">
-            <th class="column-0"></th>
-            <th class="column-1">Product</th>
-            <th class="column-2"></th>
-            <th class="column-3">Price</th>
-            <th class="column-4">Quantity</th>
-            <th class="column-5">Total</th>
-          </tr>
+          <tbody>
+            <tr class="table_head">
+              <th class="column-0"></th>
+              <th class="column-1">Product</th>
+              <th class="column-2"></th>
+              <th class="column-3">Price</th>
+              <th class="column-4">Quantity</th>
+              <th class="column-5">Total</th>
+            </tr>
 
- 
-          <CartItem v-for="cart in carts" :key="cart.product" :productId="cart.product" :productName="cart.name" :productImage="cart.image" :productPrice="cart.price" :productQty='cart.qty' />
-          
-        </tbody>
-      </table>
-     </div>
-     <div class="sidebar">
-       <form @submit.prevent="submitOrder">
-					<div>
-						<h4>
-							Cart Totals
-						</h4>
+            <CartItem
+              v-for="cart in carts"
+              :key="cart.product"
+              :productId="cart.product"
+              :productName="cart.name"
+              :productImage="cart.image"
+              :productPrice="cart.price"
+              :productQty="cart.qty"
+            />
+          </tbody>
+        </table>
+      </div>
+      <div class="sidebar">
+        <form @submit.prevent="submitOrder">
+          <div>
+            <h4>
+              Cart Totals
+            </h4>
 
-						<div class="detail p-b-13">
-							<div>
-								<span>
-									Subtotal:
-								</span>
-							</div>
+            <div class="detail p-b-13">
+              <div>
+                <span>
+                  Subtotal:
+                </span>
+              </div>
 
-							<div class="t-r">
-								<span>
-									{{ format(subtotal) }}
-								</span>
-							</div>
-						</div>
+              <div class="t-r">
+                <span>
+                  {{ format(subtotal) }}
+                </span>
+              </div>
+            </div>
 
             <div class="detail p-t-15 p-b-13">
-							<div>
-								<span>
-									Shipping Fee:
-								</span>
-							</div>
+              <div>
+                <span>
+                  Shipping Fee:
+                </span>
+              </div>
 
-							<div class="t-r">
-								<span>
-									{{ format(shippingPrice) }}
-								</span>
-							</div>
-						</div>
+              <div class="t-r">
+                <span>
+                  {{ format(shippingPrice) }}
+                </span>
+              </div>
+            </div>
 
-						<div class="shipping-detail p-t-15 p-b-30">
-							<div>
-								<div style="display: grid ; grid-template-column: 1fr">
-									<span class="stext-112">
-										Calculate Shipping
-									</span>
-
-									<div class="input-box">
-										<select name="state" v-model="state" required>
-											<option disabled value="">Select a state...</option>
-											<option v-for="state in states" :key="state" :value="state">{{ state }}</option>
-										</select>
-									</div>
+            <div class="shipping-detail p-t-15 p-b-30">
+              <div>
+                <div style="display: grid ; grid-template-column: 1fr">
+                  <span class="stext-112">
+                    Calculate Shipping
+                  </span>
 
                   <div class="input-box">
-										<input required type="text" name="address" placeholder="Address" v-model="address">
-									</div>
+                    <select name="state" v-model="state" required>
+                      <option disabled value="">Select a state...</option>
+                      <option
+                        v-for="state in states"
+                        :key="state"
+                        :value="state"
+                        >{{ state }}</option
+                      >
+                    </select>
+                  </div>
 
-									<div class="input-box">
-										<select name="city" v-model="city" required>
-											<option disabled value="">Select a city...</option>
-											<option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
-										</select>
-									</div>
+                  <div class="input-box">
+                    <input
+                      required
+                      type="text"
+                      name="address"
+                      placeholder="Address"
+                      v-model="address"
+                    />
+                  </div>
 
-									<div class="input-box">
-										<input required type="text" name="postalcode" placeholder="Postal Code / Zip" v-model="postalCode">
-									</div>										
-								</div>
-							</div>
-						</div>
+                  <div class="input-box">
+                    <select name="city" v-model="city" required>
+                      <option disabled value="">Select a city...</option>
+                      <option
+                        v-for="city in cities"
+                        :key="city"
+                        :value="city"
+                        >{{ city }}</option
+                      >
+                    </select>
+                  </div>
 
-						<div class="detail p-t-15 p-b-13">
-							<div>
-								<span>
-									Total:
-								</span>
-							</div>
+                  <div class="input-box">
+                    <input
+                      required
+                      type="text"
+                      name="postalcode"
+                      placeholder="Postal Code / Zip"
+                      v-model="postalCode"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
 
-							<div class="t-r">
-								<span>
-									{{ format( shippingPrice + subtotal) }}
-								</span>
-							</div>
-						</div>
+            <div class="detail p-t-15 p-b-13">
+              <div>
+                <span>
+                  Total:
+                </span>
+              </div>
+
+              <div class="t-r">
+                <span>
+                  {{ format(shippingPrice + subtotal) }}
+                </span>
+              </div>
+            </div>
             <Button
               theme="blue-rev"
               :isLoading="isLoading"
@@ -107,15 +136,21 @@
                 'border-radius': '5px',
                 padding: '15px',
                 width: '100%',
-              }">Proceed to Checkout</Button>
-					</div>
-       </form>   
-			</div>
-   </section>
-   <EmptyPage heading="Your cart is empty!" text="Browse our products and discover our best deals!" v-else>
+              }"
+              >Proceed to Checkout</Button
+            >
+          </div>
+        </form>
+      </div>
+    </section>
+    <EmptyPage
+      heading="Your cart is empty!"
+      text="Browse our products and discover our best deals!"
+      v-else
+    >
       <router-link to="/shop/1">start shopping</router-link>
     </EmptyPage>
- </main>
+  </main>
 </template>
 
 <script>
@@ -123,71 +158,91 @@ import { useStore } from 'vuex';
 import { computed, reactive, toRefs, watch } from 'vue';
 import CartItem from '@/components/CartItem';
 import EmptyPage from '@/components/Error/EmptyPage';
-import currencyFormater from  '../currencyFormat';
+import currencyFormater from '../currencyFormat';
 import { getCities, states } from '../service/states'; //shows list of states in nigeria and cities in that state
 import { useRouter } from 'vue-router';
 import Button from '@/components/Button';
 
 export default {
-  
-  setup(){
+  setup() {
     const store = useStore();
     const router = useRouter();
     const data = reactive({
-      carts: computed( () => store.getters.getCarts ),
-      subtotal: computed( () => store.getters.getSubTotal ),
+      carts: computed(() => store.getters.getCarts),
+      subtotal: computed(() => store.getters.getSubTotal),
       state: '',
       address: '',
       city: '',
       cities: computed(() => getCities(data.state)),
       postalCode: '',
       shippingPrice: 0,
-      isLoading: false
-    })
-
-    watch(() => data.city, (value) => {
-      if(value === '') {
-        data.shippingPrice = 0
-      } else { 
-        // maximum shipping price is 10000
-        // minimum shipping price is 2000
-        // radom gen btw 2000 - 10000
-        data.shippingPrice = 2000 + Math.floor(Math.random() * 8000);
-      }
+      isLoading: false,
     });
 
-    watch(() => data.state, () => {
-      //reset selected city
-      data.city = '';
-    })
+    watch(
+      () => data.city,
+      (value) => {
+        if (value === '') {
+          data.shippingPrice = 0;
+        } else {
+          // maximum shipping price is 10000
+          // minimum shipping price is 2000
+          // radom gen btw 2000 - 10000
+          data.shippingPrice = 2000 + Math.floor(Math.random() * 8000);
+        }
+      }
+    );
+
+    watch(
+      () => data.state,
+      () => {
+        //reset selected city
+        data.city = '';
+      }
+    );
 
     const { format } = currencyFormater();
 
-    async function submitOrder () {
+    async function submitOrder() {
       try {
         // if cart is empty
-        if(data.carts.length < 1)
-          store.commit('popupAlert', { head: 'Unable to submit order', body: 'cart is empty', status: 'error'})
-        else if( !(data.state && data.city && data.address && data.postalCode) ) {
-          store.commit('popupAlert', { head: 'Unable to submit order', body: 'Please fill shipping address', status: 'error'})
-        }
-        else {
-          data.isLoading = true
+        if (data.carts.length < 1)
+          store.commit('popupAlert', {
+            head: 'Unable to submit order',
+            body: 'cart is empty',
+            status: 'error',
+          });
+        else if (
+          !(data.state && data.city && data.address && data.postalCode)
+        ) {
+          store.commit('popupAlert', {
+            head: 'Unable to submit order',
+            body: 'Please fill shipping address',
+            status: 'error',
+          });
+        } else {
+          data.isLoading = true;
           const newOrder = {
             shipping: {
               address: data.address,
               city: data.city,
               postalCode: data.postalCode,
-              state: data.state
+              state: data.state,
             },
             orderItems: data.carts,
             itemsPrice: data.subtotal,
             shippingPrice: data.shippingPrice,
-            totalPrice: data.shippingPrice + data.subtotal
-          }
-          const { data: { order }} = await store.dispatch('submitOrder', newOrder);
-      
-          store.commit('popupAlert', { head: 'Thank you', body: 'Your order has been received.', status: 'success'});
+            totalPrice: data.shippingPrice + data.subtotal,
+          };
+          const {
+            data: { order },
+          } = await store.dispatch('submitOrder', newOrder);
+
+          store.commit('popupAlert', {
+            head: 'Thank you',
+            body: 'Your order has been received.',
+            status: 'success',
+          });
           store.commit('clearCart');
           data.isLoading = false;
           router.push(`/orders/${order.id}`);
@@ -205,42 +260,42 @@ export default {
       states: states(), //list of states in nigeria
       submitOrder,
       Button,
-      EmptyPage
-    }
-  }
-}
+      EmptyPage,
+    };
+  },
+};
 </script>
 
 <style>
-  main{
-    margin-top: 25px;
-    margin-bottom: 150px;
-    min-height: calc(100vh - 150px);
-  }
+main {
+  margin-top: 25px;
+  margin-bottom: 150px;
+  min-height: calc(100vh - 150px);
+}
 
-  .cart {
-    display: grid;
-    grid-template-columns: 8fr 5fr;
-  }
+.cart {
+  display: grid;
+  grid-template-columns: 8fr 5fr;
+}
 
-  .wrap-table-shopping-cart {
-    height: fit-content;
-    text-align: center;
-    overflow: auto;
-    border-left: 1px solid #e6e6e6;
-    border-right: 1px solid #e6e6e6;
-  }
+.wrap-table-shopping-cart {
+  height: fit-content;
+  text-align: center;
+  overflow: auto;
+  border-left: 1px solid #e6e6e6;
+  border-right: 1px solid #e6e6e6;
+}
 
-  .table-shopping-cart {
-    border-collapse: collapse;
-    width: 100%;
-    min-width: 680px;
-  }
+.table-shopping-cart {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 680px;
+}
 
-  .table-shopping-cart tr {
-    border-top: 1px solid #e6e6e6;
-    border-bottom: 1px solid #e6e6e6;
-  }
+.table-shopping-cart tr {
+  border-top: 1px solid #e6e6e6;
+  border-bottom: 1px solid #e6e6e6;
+}
 
 .table-shopping-cart .column-1 {
   width: 133px;
@@ -313,9 +368,6 @@ export default {
   line-height: 1.6;
 }
 
-
-
-
 .wrap-num-product {
   display: flex;
   width: 140px;
@@ -375,12 +427,13 @@ input.num-product {
   margin: 0;
 }
 
-.shipping-detail, .detail {
+.shipping-detail,
+.detail {
   border-bottom: 1px dashed #d9d9d9;
 }
 .sidebar .detail {
   display: grid;
-  grid-template-columns: auto 1fr ;
+  grid-template-columns: auto 1fr;
   gap: 10px;
 }
 
@@ -434,7 +487,6 @@ input.num-product {
   margin-bottom: 12px;
 }
 
-
 .input-box select {
   width: 100%;
   height: 40px;
@@ -442,7 +494,6 @@ input.num-product {
   border: 1px solid rgb(118, 118, 118);
   border-radius: 2px;
   background-color: #fff;
-  
 }
 
 .input-box input {
@@ -452,9 +503,7 @@ input.num-product {
   box-sizing: border-box;
 }
 
-
-
-@media only screen and (max-width: 1200px ) {
+@media only screen and (max-width: 1200px) {
   .cart {
     grid-template-columns: 1fr;
   }
@@ -464,5 +513,4 @@ input.num-product {
     margin-top: 50px;
   }
 }
-
 </style>

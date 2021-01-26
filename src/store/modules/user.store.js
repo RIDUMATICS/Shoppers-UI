@@ -1,55 +1,58 @@
-import axios from "../../service/axiosInstance";
-
+import axios from '../../service/axiosInstance';
 
 const state = {
-  user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null,
-  authenticated: localStorage.getItem('token') ? true : false
+  user: localStorage.getItem('user')
+    ? JSON.parse(localStorage.getItem('user'))
+    : null,
+  authenticated: localStorage.getItem('token') ? true : false,
 };
 
 const getters = {
   isAuthenticated: (state) => {
-    return state.authenticated
+    return state.authenticated;
   },
   getUser: (state) => state.user,
 };
 
 const actions = {
-  registerUser({ commit }, newUser){
+  registerUser({ commit }, newUser) {
     return new Promise((resolve, reject) => {
-      axios.post('/auth/signup', newUser)
-      .then(response => {
-        const { token, user } = response.data.result;
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(user));
-        commit('setUser', user);
-        resolve();
-      })
-      .catch( err => {
-        reject(err);
-      });
-    })
+      axios
+        .post('/auth/signup', newUser)
+        .then((response) => {
+          const { token, user } = response.data.result;
+          localStorage.setItem('token', token);
+          localStorage.setItem('user', JSON.stringify(user));
+          commit('setUser', user);
+          resolve();
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
   },
 
-  loginUser({ commit }, { email, password }){
+  loginUser({ commit }, { email, password }) {
     return new Promise((resolve, reject) => {
-      axios.post('/auth/login', {
-        email,
-        password
-      })
-      .then(response => {
-        const { token, user } = response.data.result;
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(user));
-        commit('setUser', user);
-        resolve();
-      })
-      .catch(error => {
-        reject(error);
-      });
-    })
+      axios
+        .post('/auth/login', {
+          email,
+          password,
+        })
+        .then((response) => {
+          const { token, user } = response.data.result;
+          localStorage.setItem('token', token);
+          localStorage.setItem('user', JSON.stringify(user));
+          commit('setUser', user);
+          resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
   },
 
-  logoutUser({ commit }){
+  logoutUser({ commit }) {
     return new Promise((resolve, reject) => {
       try {
         localStorage.removeItem('token');
@@ -60,24 +63,24 @@ const actions = {
         reject(error);
       }
     });
-  }
+  },
 };
 
 const mutations = {
-  setUser: ( state, user) =>   {
+  setUser: (state, user) => {
     state.authenticated = true;
     state.user = user;
   },
 
-  removeUser: ( state) =>   {
+  removeUser: (state) => {
     state.authenticated = false;
-    state.user = "";
-  }
+    state.user = '';
+  },
 };
 
 export default {
   state,
   getters,
   actions,
-  mutations
-}
+  mutations,
+};

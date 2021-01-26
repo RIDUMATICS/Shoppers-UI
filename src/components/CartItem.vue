@@ -1,11 +1,11 @@
 <template>
   <tr class="table_row">
     <td class="column-0">
-      <font-awesome-icon :icon="faTimes" @click="removeFromCart"/>
+      <font-awesome-icon :icon="faTimes" @click="removeFromCart" />
     </td>
     <td class="column-1">
       <div class="how-itemcart1">
-        <img :src="productImage" alt="IMG">
+        <img :src="productImage" alt="IMG" />
       </div>
     </td>
     <td class="column-2">{{ productName }}</td>
@@ -16,7 +16,12 @@
           <font-awesome-icon :icon="faMinus" />
         </div>
 
-        <input class="num-product" type="number" name="num-product1" :value="productQty" />
+        <input
+          class="num-product"
+          type="number"
+          name="num-product1"
+          :value="productQty"
+        />
 
         <div class="btn-num-product-up" @click="increaseQty">
           <font-awesome-icon :icon="faPlus" />
@@ -29,7 +34,7 @@
 
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faTimes, faMinus, faPlus  } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useStore } from 'vuex';
 import currencyFormater from '../currencyFormat';
 
@@ -38,23 +43,23 @@ export default {
     productName: String,
     productPrice: Number,
     productImage: String,
-    productId: String,
-    productQty: Number
+    productId: Number,
+    productQty: Number,
   },
-  setup(props){
+  setup(props) {
     const store = useStore();
     const { format } = currencyFormater();
 
-    function increaseQty () {
-      store.commit('increaseQty', { productId: props.productId });  
+    function increaseQty() {
+      store.commit('increaseQty', { productId: props.productId });
     }
 
-    function decreaseQty () {
-      store.commit('decreaseQty', { productId: props.productId });  
+    function decreaseQty() {
+      store.commit('decreaseQty', { productId: props.productId });
     }
 
     function removeFromCart() {
-      store.commit('removeFromCart', { productId: props.productId })
+      store.commit('removeFromCart', { productId: props.productId });
     }
 
     return {
@@ -65,12 +70,10 @@ export default {
       format,
       increaseQty,
       decreaseQty,
-      removeFromCart
-    }
-  }
-}
+      removeFromCart,
+    };
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

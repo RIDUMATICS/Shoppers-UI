@@ -1,97 +1,123 @@
 <template>
- <main v-if="product.name">
+  <main v-if="product.name">
     <section class="section product-detail">
-    <div class="details container-md">
-      <div class="left">
-        <div class="main">
-          <img :src="product.image" alt="">
-          <div class="discount" v-if="dicount > 0">{{product.discount}}%</div>
-        </div>
-      </div>
-      <div class="right container">
-        <h1>{{ product.name }}</h1>
-        <div class="price" v-show="product.discount">{{ format(product.price - (product.price * product.discount/100)) }}</div>
-        <h4 class="price" :class="{'disable' : product.discount}">{{ format(product.price) }}</h4>
-        <br />
-        <Ratings :starValue="product.rating"/>
-        <p class="reviews-count">({{ product.reviews.length }} Costumer reviews)</p>
-        <div class="product-desc">
-          <h3>Product Description</h3>
-          <p>{{ product.description }}</p>
-        </div>
-        <form class="form" v-if="product.countInStock > 0">
-          Quantity
-          <div class="product-qty">
-            <div class="inc-product-qty" @click="decreaseQty">
-              <font-awesome-icon :icon="faMinus" />
-            </div>
-            <input class="product-qty-input" type="number" :value="qty" min="1" max="5"/>
-            <div class="dec-product-qty" @click="increaseQty">
-              <font-awesome-icon :icon="faPlus" />
+      <div class="details container-md">
+        <div class="left">
+          <div class="main">
+            <img :src="product.image" alt="" />
+            <div class="discount" v-if="dicount > 0">
+              {{ product.discount }}%
             </div>
           </div>
-          <button class="btn" @click.prevent="addToCartHandler">Add To Cart</button>
-        </form>
-        <p v-else class="sold-out">OUT OF STOCK</p>
+        </div>
+        <div class="right container">
+          <h1>{{ product.name }}</h1>
+          <div class="price" v-show="product.discount">
+            {{
+              format(product.price - (product.price * product.discount) / 100)
+            }}
+          </div>
+          <h4 class="price" :class="{ disable: product.discount }">
+            {{ format(product.price) }}
+          </h4>
+          <br />
+          <Ratings :starValue="product.rating" />
+          <p class="reviews-count">
+            ({{ product.reviews.length }} Costumer reviews)
+          </p>
+          <div class="product-desc">
+            <h3>Product Description</h3>
+            <p>{{ product.description }}</p>
+          </div>
+          <form class="form" v-if="product.countInStock > 0">
+            Quantity
+            <div class="product-qty">
+              <div class="inc-product-qty" @click="decreaseQty">
+                <font-awesome-icon :icon="faMinus" />
+              </div>
+              <input
+                class="product-qty-input"
+                type="number"
+                :value="qty"
+                min="1"
+                max="5"
+              />
+              <div class="dec-product-qty" @click="increaseQty">
+                <font-awesome-icon :icon="faPlus" />
+              </div>
+            </div>
+            <button class="btn" @click.prevent="addToCartHandler">
+              Add To Cart
+            </button>
+          </form>
+          <p v-else class="sold-out">OUT OF STOCK</p>
+        </div>
       </div>
-    </div>
     </section>
-    <Review :reviews="product.reviews"/>
- </main>
+    <Review :reviews="product.reviews" />
+  </main>
 </template>
 
 <script>
 import { computed, onMounted, reactive, toRefs } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faMinus, faPlus  } from '@fortawesome/free-solid-svg-icons';
-import { useStore } from 'vuex'
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { useStore } from 'vuex';
 import Ratings from '@/components/Ratings.vue';
 import currencyFormat from '../currencyFormat';
-import { useRoute } from 'vue-router';
 import Review from '../components/Review.vue';
 export default {
-  setup(){
+  props: {
+    productId: {
+      type: Number,
+      required: true
+    }
+  },
+  setup(props) {
     const store = useStore();
-    const route = useRoute();
     const { format } = currencyFormat();
     let data = reactive({
-      product: computed(() => store.getters.getProductDetails ),
-      qty: 1
+      product: computed(() => store.getters.getProductDetails),
+      qty: 1,
     });
 
     function decreaseQty() {
-      if(data.qty - 1 >= 1){
-        data.qty -= 1 
+      if (data.qty - 1 >= 1) {
+        data.qty -= 1;
       }
     }
 
     function increaseQty() {
-      if(data.qty + 1 <= data.product.countInStock){
-        data.qty += 1 
+      if (data.qty + 1 <= data.product.countInStock) {
+        data.qty += 1;
       }
     }
 
-    function addToCartHandler () {
+    function addToCartHandler() {
       store.commit('addToCart', {
         product: data.product.id,
         name: data.product.name,
         image: data.product.image,
-        price: data.product.price - (data.product.price * data.product.discount/100),
+        price:
+          data.product.price -
+          (data.product.price * data.product.discount) / 100,
         countInStock: data.product.countInStock,
         discount: data.product.discount,
-        qty: data.qty
-      })
+        qty: data.qty,
+      });
     }
 
     onMounted(async () => {
       try {
-        store.commit('showLoading');  
-        await store.dispatch('fetchProductById', { productId: route.params.productId })
+        store.commit('showLoading');
+        await store.dispatch('fetchProductById', {
+          productId: props.productId,
+        });
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
       store.commit('closeLoading');
-    })
+    });
 
     return {
       ...toRefs(data),
@@ -103,17 +129,17 @@ export default {
       addToCartHandler,
       Review,
       increaseQty,
-      decreaseQty
-    }
-  }
-}
+      decreaseQty,
+    };
+  },
+};
 </script>
 
 <style>
- main{
-    margin-top: 25px;
-    margin-bottom: 150px;
-  }
+main {
+  margin-top: 25px;
+  margin-bottom: 150px;
+}
 
 .product-detail .details {
   display: grid;
@@ -182,15 +208,16 @@ export default {
 }
 
 div.product-qty {
-    border: 1px solid #e6e6e6;
-    border-radius: 3px;
-    height: 45px;
-    width: 150px;
-    display: grid !important;
-    grid-template-columns: auto 1fr auto;
+  border: 1px solid #e6e6e6;
+  border-radius: 3px;
+  height: 45px;
+  width: 150px;
+  display: grid !important;
+  grid-template-columns: auto 1fr auto;
 }
 
-.inc-product-qty, .dec-product-qty {
+.inc-product-qty,
+.dec-product-qty {
   width: 45px;
   height: 100%;
   cursor: pointer;
@@ -234,7 +261,6 @@ div.product-qty {
   width: 45px;
   height: 100%;
   cursor: pointer;
-
 }
 
 .num-product {
@@ -342,7 +368,8 @@ input.num-product {
 }
 
 @media only screen and (max-width: 650px) {
-  .review > div, .review .form {
+  .review > div,
+  .review .form {
     width: 100%;
   }
 
@@ -352,7 +379,6 @@ input.num-product {
 
   .product-detail .right {
     padding: 0 15px;
-
   }
 
   .product-detail .left {

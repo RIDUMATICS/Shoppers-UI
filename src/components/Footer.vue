@@ -48,7 +48,7 @@
           </div>
           <div>
             <span>
-              <font-awesome-icon :icon="faPaperPlane" />  
+              <font-awesome-icon :icon="faPaperPlane" />
             </span>
             Dream City, Lagos
           </div>
@@ -60,74 +60,77 @@
 
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faMapMarkerAlt, faPaperPlane, faPhoneAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import {
+  faMapMarkerAlt,
+  faPaperPlane,
+  faPhoneAlt,
+  faEnvelope,
+} from '@fortawesome/free-solid-svg-icons';
 export default {
-  name: "Footer",
+  name: 'Footer',
 
-  setup(){
+  setup() {
     return {
       FontAwesomeIcon,
       faMapMarkerAlt,
       faPaperPlane,
       faPhoneAlt,
-      faEnvelope
-    }
-  }
-}
+      faEnvelope,
+    };
+  },
+};
 </script>
 
 <style>
-  .footer {
-    background-color: #222;
-    padding: 6rem 1rem;
-    line-height: 3rem;
-  }
+.footer {
+  background-color: #222;
+  padding: 6rem 1rem;
+  line-height: 3rem;
+}
 
-  .footer-center {
-    margin-right: 1rem;
-  }
+.footer-center {
+  margin-right: 1rem;
+}
 
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) auto;
+  color: #fff;
+}
+
+.footer-center a:link,
+.footer-center a:visited {
+  display: block;
+  color: #f1f1f1;
+  font-size: 1.4rem;
+  transition: 0.6s;
+}
+
+.footer-center a:hover {
+  color: #f60091;
+}
+
+.footer-center div {
+  color: #f1f1f1;
+  font-size: 1.4rem;
+}
+
+.footer-center h3 {
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+@media only screen and (max-width: 996px) {
   .footer-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr) auto;
-    color: #fff;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 2rem;
   }
+}
 
-  .footer-center a:link,
-  .footer-center a:visited {
-    display: block;
-    color: #f1f1f1;
-    font-size: 1.4rem;
-    transition: .6s;
+@media only screen and (max-width: 668px) {
+  .footer-container {
+    grid-template-columns: 1fr;
   }
-
-  .footer-center a:hover {
-    color: #f60091;
-  }
-
-  .footer-center div {
-    color: #f1f1f1;
-    font-size: 1.4rem;
-  }
-
-
-  .footer-center h3 {
-    font-size: 1.8rem;
-    font-weight: 400;
-    margin-bottom: 1rem;
-  }
-
-  @media only screen and (max-width: 996px){
-    .footer-container {
-      grid-template-columns: repeat(2, 1fr);
-      row-gap: 2rem;
-    }
-  }
-  
-  @media only screen and (max-width: 668px){
-    .footer-container {
-      grid-template-columns: 1fr; 
-    }
-  }
-
+}
 </style>

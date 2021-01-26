@@ -1,26 +1,29 @@
 <template>
   <div id="loading" v-if="isLoading">
     <div>
-      <div class="lds-ripple"><div></div><div></div></div>
+      <div class="lds-ripple">
+        <div></div>
+        <div></div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { computed, reactive, toRefs } from 'vue';
-import { useStore } from 'vuex'
+import { useStore } from 'vuex';
 export default {
-  setup(){
+  setup() {
     const store = useStore();
     const data = reactive({
-      isLoading: computed(() => store.getters.getIsLoading)
-    })
+      isLoading: computed(() => store.getters.getIsLoading),
+    });
 
     return {
-      ...toRefs(data)
-    }
-  }
-}
+      ...toRefs(data),
+    };
+  },
+};
 </script>
 
 <style>
@@ -31,7 +34,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(36,58,111, 1);
+  background-color: rgba(36, 58, 111, 1);
   display: flex;
   justify-content: center;
   align-items: center;
