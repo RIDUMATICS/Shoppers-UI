@@ -15,7 +15,7 @@ password: admin_SHOPPERS
 
 ## UI Templates
 
-UI templates for the application can be found here on [Netlify](https://shoppers-ui.netlify.app).
+UI templates for the application can be found here on [https://shoppers-ui.netlify.app](https://shoppers-ui.netlify.app).
 
 ---
 
