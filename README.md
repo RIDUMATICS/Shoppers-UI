@@ -1,6 +1,11 @@
 # SHOPPERS 👚👜👗👖
 > Shopper is an implementation of an on-line store in Postgresql, Vue.js,  and Sails.js which is similar to the existing online shopping websites like Amazon and ebay.
 Each user can sign-in either as a user(shopper) or an admin. Then based on their roles they will have different access privileges. 
+Key Features:
+	- User:  Add products to cart, Place an order, Make payment with using Flutterwave 
+	- Real time SMS and E-mail notification upon order payment and delivery
+	- Admin: Manage Inventory (Create, or edit, or delete a product ), Deliver order
+
 
 ## Admin Data
 > email: admin@shoppers.com
